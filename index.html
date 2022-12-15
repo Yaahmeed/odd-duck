@@ -2,30 +2,34 @@
 <html lang="en">
 
 <head>
-  <title>Odd Duck</title>
+  <title>Goat Vote</title>
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@500&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@500&display=swap" rel="stylesheet">
 </head>
 
 <body>
-  <header>
-    
-  <h1>Odd Duck</h1>
-</header>
+  <h1>ODD DUCK</h1>
   <main>
-  
     <section id="img-container">
       <img id="img-one" src="" alt="">
       <img id="img-two" src="" alt="">
       <img id="img-three" src="" alt="">
     </section>
-    <button id="show-results-btn">View Results</button>
-    <ul id="results-container"></ul>
+    <section id="button-container">
+      <button id="show-results-btn">View Results</button>
+    </section>
+    <section id="results-container">
+      <canvas id="chart"></canvas>
+    </section>
   </main>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.0.1/dist/chart.umd.min.js"></script>
   <script src="js/app.js"></script>
+  <footer>
+
+  </footer>
 </body>
 
 </html>
