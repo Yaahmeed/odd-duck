@@ -1,5 +1,6 @@
 'use strict';
 
+
 // ******* GLOBALS *******
 let productArray = [];
 let votingRounds = 25;
@@ -13,7 +14,6 @@ let imgThree = document.getElementById('img-three');
 
 let resultsBtn = document.getElementById('show-results-btn');
 let canvasElem = document.getElementById('chart');
-
 
 // ***** CONSTRUCTOR FUNCTION ******
 
@@ -38,21 +38,20 @@ let indexArray = [];
 
 function renderImg() {
 
+
+
+  // TODO: 3 unique images and populate the images
+
   while (indexArray.length < 6) {
     let randoNum = randomIndex();
     if (!indexArray.includes(randoNum)) {
       indexArray.push(randoNum);
     }
   }
-
   let imgOneIndex = indexArray.shift();
   let imgTwoIndex = indexArray.shift();
   let imgThreeIndex = indexArray.shift();
 
-  // while (imgOneIndex === imgTwoIndex || imgOneIndex === imgThreeIndex || imgTwoIndex === imgThreeIndex) {
-  //   imgThreeIndex = productArray[randomIndex()];
-  //   imgTwoIndex = productArray[randomIndex()];
-  // }
 
 
   imgOne.src = productArray[imgOneIndex].img;
@@ -60,16 +59,18 @@ function renderImg() {
   imgThree.src = productArray[imgThreeIndex].img;
   imgOne.title = productArray[imgOneIndex].name;
   imgTwo.title = productArray[imgTwoIndex].name;
-  imgThree.titles = productArray[imgThreeIndex].name;
+  imgThree.title = productArray[imgThreeIndex].name;
   imgOne.alt = `this is an image of ${productArray[imgOneIndex].name}`;
   imgTwo.alt = `this is an image of ${productArray[imgTwoIndex].name}`;
   imgThree.alt = `this is an image of ${productArray[imgThreeIndex].name}`;
 
+
+
   productArray[imgOneIndex].views++;
   productArray[imgTwoIndex].views++;
   productArray[imgThreeIndex].views++;
-}
 
+}
 
 function renderChart() {
   let productNames = [];
@@ -77,12 +78,10 @@ function renderChart() {
   let productViews = [];
 
   for (let i = 0; i < productArray.length; i++) {
-    productNames.push(Product.productArray[i].name);
-    productVotes.push(Product.productArray[i].votes);
-    productViews.push(Product.productArray[i].views);
-
+    productNames.push(productArray[i].name);
+    productVotes.push(productArray[i].votes);
+    productViews.push(productArray[i].views);
   }
-  // resultsBtn.removeEventListener('click', handleShowResults);
 
   let chartObj = {
     type: 'bar',
@@ -92,13 +91,13 @@ function renderChart() {
         label: '# of Votes',
         data: productVotes,
         borderWidth: 1,
-        backgroundColor: 'violet'
+        backgroundColor: '#b2e4f0'
       },
       {
         label: '# of Views',
         data: productViews,
         borderWidth: 1,
-        backgroundColor: 'white'
+        backgroundColor: '#d6b2f0'
       }]
     },
     options: {
@@ -113,75 +112,96 @@ function renderChart() {
 }
 
 // **** EVENT HANDLERS *****
-// TODO: increase the number of views on the images that have been rendered
+
 function handleClick(event) {
 
 
-  // TODO: Identify what image was clicked on
+
   let imgClicked = event.target.title;
+
   console.log(imgClicked);
 
 
-
-  // TODO: Increase the number of votes to that specific image
   for (let i = 0; i < productArray.length; i++) {
     if (imgClicked === productArray[i].name) {
       productArray[i].votes++;
     }
   }
 
-  // TODO: decrement voting rounds
   votingRounds--;
 
-  // TODO: Rerender 3 new images
+
   renderImg();
 
-  // TODO: once voting rounds have ended - not allow any more clicks
+
   if (votingRounds === 0) {
     imgContainer.removeEventListener('click', handleClick);
+
+    let stringifiedProducts = JSON.stringify(productArray);
+
+    localStorage.setItem('myProducts', stringifiedProducts);
+
   }
 }
+
 
 function handleShowResults() {
   // TODO: Display the results once the there are no more votes
   if (votingRounds === 0) {
-    // for (let i = 0; i < productArray.length; i++) {
-    //   let liElem = document.createElement('li');
-    //   liElem.textContent = `${productArray[i].name} - views: ${productArray[i].views} & votes: ${productArray[i].votes}`;
-    //   resultsList.appendChild(liElem);
-    // }
     resultsBtn.removeEventListener('click', handleShowResults);
     renderChart();
   }
 }
 
+let retrievedProducts = localStorage.getItem('myProducts');
 
-// **** EXECUTABLE CODE *****
-let bag = new Product('bag');
-let banana = new Product('banana');
-let bathroom = new Product('bathroom');
-let boots = new Product('boots');
-let breakfast = new Product('breakfast');
-let bubblegum = new Product('bubblegum');
-let chair = new Product('chair');
-let cthulhu = new Product('cthulhu');
-let dogDuck = new Product('dog-duck');
-let dragon = new Product('dragon');
-let pen = new Product('pen');
-let petSweep = new Product('pet-sweep');
-let scissors = new Product('scissors');
-let shark = new Product('shark');
-let sweep = new Product('sweep', 'png');
-let tauntaun = new Product('tauntaun');
-let unicorn = new Product('unicorn');
-let waterCan = new Product('water-can');
-let wineGlass = new Product('wine-glass');
 
-productArray.push(bag, banana, bathroom, boots, breakfast, bubblegum, chair, cthulhu, dogDuck, dragon, pen, petSweep, scissors, shark, sweep, tauntaun, unicorn, waterCan, wineGlass);
+let parsedProducts = JSON.parse(retrievedProducts);
+
+if (retrievedProducts) {
+  for(let i = 0; i < parsedProducts.length; i++) {
+    if(parsedProducts[i].name === 'bag'){
+      let reconstructedBag = new Product(parsedProducts[i].name, 'png');
+      reconstructedBag.views = parsedProducts[i].views;
+      reconstructedBag.votes = parsedProducts[i].votes;
+      productArray.push(reconstructedBag);
+    }else {
+      let reconstructedProduct = new Product(parsedProducts[i].name);
+      reconstructedProduct.views = parsedProducts[i].views;
+      reconstructedProduct.votes = parsedProducts[i].votes;
+      productArray.push(reconstructedProduct);
+    }
+  }
+  productArray = parsedProducts;
+} else {
+  // **** EXECUTABLE CODE *****
+  let bag = new Product('bag');
+  let banana = new Product('banana');
+  let bathroom = new Product('bathroom');
+  let boots = new Product('boots');
+  let breakfast = new Product('breakfast');
+  let bubblegum = new Product('bubblegum');
+  let chair = new Product('chair');
+  let cthulhu = new Product('cthulhu');
+  let dogDuck = new Product('dog-duck');
+  let dragon = new Product('dragon');
+  let pen = new Product('pen');
+  let petSweep = new Product('pet-sweep');
+  let scissors = new Product('scissors');
+  let shark = new Product('shark');
+  let sweep = new Product('sweep', 'png');
+  let tauntaun = new Product('tauntaun');
+  let unicorn = new Product('unicorn');
+  let waterCan = new Product('water-can');
+  let wineGlass = new Product('wine-glass');
+
+  productArray.push(bag, banana, bathroom, boots, breakfast, bubblegum, chair, cthulhu, dogDuck, dragon, pen, petSweep, scissors, shark, sweep, tauntaun, unicorn, waterCan, wineGlass);
+}
+
 
 renderImg();
 
 imgContainer.addEventListener('click', handleClick);
 resultsBtn.addEventListener('click', handleShowResults);
 
-console.log(productArray);
+// console.log(productArray);
