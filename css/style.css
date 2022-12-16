@@ -1,17 +1,21 @@
 body {
-  background-color: #222;
+  background-color: rgb(41, 8, 41);
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+
 }
 
 h1 {
   text-align: center;
-  background: linear-gradient(to right, #dc6765, #eb7199, #8a52eb, #4390d5, #60b0ba, #7ce181, #e0ec60, #eab156, #d97353);
+  background: linear-gradient(to right, #dc6765, #eb7199, #8a52eb, #4390d5, #60b0ba, #35983a, #e0ec60, #eab156, #d97353);
   font-family: 'Exo 2', sans-serif;
   font-size: 4em;
   padding: 50px;
   margin-bottom: 50px;
 }
 
+h3 {
+  background-color: #1a401a;
+}
 
 #img-container {
   display: flex;
@@ -26,11 +30,6 @@ h1 {
 }
 
 
-/* ul {
-  color: #fff;
-  width: max-content;
-  margin: auto;
-} */
 
 li {
   line-height: 30px;
