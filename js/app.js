@@ -91,13 +91,13 @@ function renderChart() {
         label: '# of Votes',
         data: productVotes,
         borderWidth: 1,
-        backgroundColor: '#b2e4f0'
+        backgroundColor: 'violet'
       },
       {
         label: '# of Views',
         data: productViews,
         borderWidth: 1,
-        backgroundColor: '#d6b2f0'
+        backgroundColor: '#white'
       }]
     },
     options: {
