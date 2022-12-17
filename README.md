@@ -1,5 +1,9 @@
-# odd-duck
+# Author
+
+Yaz Ahmed
+
+## odd-duck
 
 ## Resources
 
-Worked witt Brennan Malone with CSS styling.
+Worked with Brennan Malone and Class Demo with CSS styling.
